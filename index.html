@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pareja Test</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #222;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: white;
+      padding: 30px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .emoji {
+      font-size: 65px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 34px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-size: 25px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      background: #ff416c;
+      color: white;
+      font-size: 19px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #e7335d;
+    }
+
+    .progress {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 1.3;
+      margin-bottom: 25px;
+    }
+
+    .answer {
+      background: #f4f4f4;
+      color: #222;
+      border: 2px solid #ddd;
+      margin: 7px 0;
+    }
+
+    .answer:hover {
+      background: #ffe5eb;
+      border-color: #ff416c;
+    }
+
+    .result {
+      font-size: 48px;
+      font-weight: bold;
+      color: #ff416c;
+      margin: 20px 0;
+    }
+
+    .locked {
+      background: #fff3f6;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app" id="app">
+
+  <div class="emoji">❤️</div>
+
+  <h1>PAREJA TEST</h1>
+
+  <h2>¿QUÉ TANTO CONOCÉS A TU PAREJA?</h2>
+
+  <p>
+    Respondé 15 preguntas y descubrí cuánto conocés realmente
+    a la persona que tenés al lado.
+  </p>
+
+  <button onclick="comenzarTest()">
+    🔥 COMENZAR TEST GRATIS
+  </button>
+
+</div>
+
+<script>
+
+const preguntas = [
+  "¿Qué tan bien conocés aquello que más preocupa actualmente a tu pareja?",
+  "¿Sabés cuál es el mayor miedo de tu pareja?",
+  "¿Sabés qué cosas hacen que tu pareja se sienta realmente querida?",
+  "¿Podés identificar rápidamente cuándo algo le pasa aunque no te lo diga?",
+  "¿Sabés cuál es la cosa que más le molesta de la relación?",
+  "¿Recordás cuál fue uno de los momentos más felices que vivieron juntos?",
+  "¿Sabés qué cambiaría tu pareja de su vida si pudiera hacerlo inmediatamente?",
+  "¿Conocés cuáles son sus principales objetivos para los próximos años?",
+  "¿Sabés qué persona ocupa un lugar especialmente importante en su vida?",
+  "¿Sabés qué situación puede generar más inseguridad en tu pareja?",
+  "¿Sabés qué espera realmente de vos cuando tiene un problema?",
+  "¿Sabés qué aspecto de vos valora más?",
+  "¿Sabés qué aspecto de la relación necesita más atención?",
+  "¿Qué tan seguro/a estás de que tu pareja puede hablar con vos de cualquier problema?",
+  "Si mañana tu pareja tuviera que decir qué es lo que más necesita de vos, ¿creés que sabrías la respuesta?"
+];
+
+let preguntaActual = 0;
+let puntos = 0;
+
+const respuestas = [
+  { texto: "No tengo idea", puntos: 1 },
+  { texto: "Creo que sé", puntos: 2 },
+  { texto: "Más o menos", puntos: 3 },
+  { texto: "Bastante", puntos: 4 },
+  { texto: "Lo sé perfectamente", puntos: 5 }
+];
+
+function comenzarTest() {
+  preguntaActual = 0;
+  puntos = 0;
+  mostrarPregunta();
+}
+
+function mostrarPregunta() {
+
+  const pregunta = preguntas[preguntaActual];
+
+  let html = `
+    <div class="progress">
+      Pregunta ${preguntaActual + 1} de ${preguntas.length}
+    </div>
+
+    <div class="question">
+      ${pregunta}
+    </div>
+  `;
+
+  respuestas.forEach(respuesta => {
+    html += `
+      <button class="answer"
+        onclick="responder(${respuesta.puntos})">
+        ${respuesta.texto}
+      </button>
+    `;
+  });
+
+  document.getElementById("app").innerHTML = html;
+}
+
+function responder(valor) {
+
+  puntos += valor;
+  preguntaActual++;
+
+  if (preguntaActual < preguntas.length) {
+    mostrarPregunta();
+  } else {
+    mostrarResultado();
+  }
+}
+
+function mostrarResultado() {
+
+  let titulo = "";
+  let descripcion = "";
+
+  if (puntos >= 61) {
+    titulo = "CONEXIÓN MUY ALTA";
+    descripcion = "Tus respuestas muestran un alto nivel de conocimiento sobre tu pareja.";
+  } 
+  else if (puntos >= 46) {
+    titulo = "BUENA CONEXIÓN";
+    descripcion = "Conocés bastante a tu pareja, aunque hay algunos aspectos que podrían sorprenderte.";
+  } 
+  else if (puntos >= 31) {
+    titulo = "HAY DISTANCIA";
+    descripcion = "Tus respuestas muestran algunos aspectos de la relación que merecen atención.";
+  } 
+  else {
+    titulo = "HAY MUCHO POR DESCUBRIR";
+    descripcion = "Tus respuestas indican que probablemente hay varias cosas que todavía no conocés de tu pareja.";
+  }
+
+  document.getElementById("app").innerHTML = `
+
+    <div class="emoji">🔎</div>
+
+    <h2>${titulo}</h2>
+
+    <div class="result">${puntos}/75</div>
+
+    <p>${descripcion}</p>
+
+    <div class="locked">
+
+      <h2>🔒 ANÁLISIS COMPLETO</h2>
+
+      <p>
+        Encontramos aspectos de tus respuestas que merecen
+        un análisis más profundo.
+      </p>
+
+      <button onclick="alert('PRÓXIMAMENTE: sistema de pago')">
+        🔓 DESBLOQUEAR ANÁLISIS
+      </button>
+
+    </div>
+
+  `;
+}
+
+</script>
+
+</body>
+</html>
