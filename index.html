@@ -1,262 +1,622 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pareja Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Hay algo que no estás viendo?</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ff416c, #ff4b2b);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #222;
-    }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #111827, #1f2937);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .app {
-      width: 100%;
-      max-width: 480px;
-      min-height: 100vh;
-      background: white;
-      padding: 30px 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-    }
+.app {
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-    .emoji {
-      font-size: 65px;
-      margin-bottom: 20px;
-    }
+.card {
+    background: #ffffff;
+    color: #111827;
+    border-radius: 24px;
+    padding: 28px 22px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.35);
+}
 
-    h1 {
-      font-size: 34px;
-      margin-bottom: 15px;
-    }
+h1 {
+    font-size: 31px;
+    line-height: 1.1;
+    text-align: center;
+    margin: 0 0 15px;
+}
 
-    h2 {
-      font-size: 25px;
-      margin-bottom: 15px;
-    }
+.subtitle {
+    text-align: center;
+    color: #4b5563;
+    font-size: 17px;
+    line-height: 1.4;
+    margin-bottom: 25px;
+}
 
-    p {
-      font-size: 18px;
-      line-height: 1.5;
-      margin-bottom: 25px;
-    }
+.start-icon {
+    font-size: 65px;
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-    button {
-      width: 100%;
-      padding: 18px;
-      border: none;
-      border-radius: 12px;
-      background: #ff416c;
-      color: white;
-      font-size: 19px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+button {
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    padding: 17px 14px;
+    margin-top: 11px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #f3f4f6;
+    color: #111827;
+    transition: 0.15s;
+}
 
-    button:hover {
-      background: #e7335d;
-    }
+button:hover {
+    transform: scale(1.02);
+}
 
-    .progress {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 20px;
-    }
+.main-btn {
+    background: #ef4444;
+    color: white;
+    font-size: 19px;
+    padding: 19px;
+}
 
-    .question {
-      font-size: 24px;
-      font-weight: bold;
-      line-height: 1.3;
-      margin-bottom: 25px;
-    }
+.progress-text {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
 
-    .answer {
-      background: #f4f4f4;
-      color: #222;
-      border: 2px solid #ddd;
-      margin: 7px 0;
-    }
+.progress {
+    width: 100%;
+    height: 9px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
 
-    .answer:hover {
-      background: #ffe5eb;
-      border-color: #ff416c;
-    }
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #ef4444;
+    transition: width 0.3s ease;
+}
 
-    .result {
-      font-size: 48px;
-      font-weight: bold;
-      color: #ff416c;
-      margin: 20px 0;
-    }
+.question {
+    font-size: 24px;
+    line-height: 1.25;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-    .locked {
-      background: #fff3f6;
-      padding: 20px;
-      border-radius: 15px;
-      margin-top: 20px;
-    }
-  </style>
+.option {
+    text-align: left;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+}
+
+.option:hover {
+    border-color: #ef4444;
+    background: #fff5f5;
+}
+
+.analysis {
+    text-align: center;
+}
+
+.analysis-icon {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.loader {
+    width: 100%;
+    height: 12px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 25px 0;
+}
+
+.loader-bar {
+    height: 100%;
+    width: 0%;
+    background: #ef4444;
+    animation: loading 1.8s forwards;
+}
+
+@keyframes loading {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+.result-title {
+    text-align: center;
+    font-size: 29px;
+    margin-bottom: 10px;
+}
+
+.result-text {
+    text-align: center;
+    color: #4b5563;
+    line-height: 1.5;
+    font-size: 16px;
+}
+
+.metric {
+    margin-top: 18px;
+}
+
+.metric-name {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.metric-bar {
+    height: 12px;
+    border-radius: 20px;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.metric-fill {
+    height: 100%;
+    background: #ef4444;
+    border-radius: 20px;
+}
+
+.locked {
+    margin-top: 18px;
+    padding: 15px;
+    border-radius: 15px;
+    background: #f3f4f6;
+    text-align: center;
+    color: #6b7280;
+    font-weight: bold;
+}
+
+.price {
+    text-align: center;
+    margin: 15px 0 5px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.payment {
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+.small {
+    text-align: center;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 18px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="app" id="app">
+<div class="app">
 
-  <div class="emoji">❤️</div>
+    <!-- INICIO -->
+    <div id="start" class="card">
 
-  <h1>PAREJA TEST</h1>
+        <div class="start-icon">🕵️</div>
 
-  <h2>¿QUÉ TANTO CONOCÉS A TU PAREJA?</h2>
+        <h1>¿HAY ALGO QUE NO ESTÁS VIENDO?</h1>
 
-  <p>
-    Respondé 15 preguntas y descubrí cuánto conocés realmente
-    a la persona que tenés al lado.
-  </p>
+        <div class="subtitle">
+            7 preguntas. Respondé con sinceridad y descubrí qué muestran tus respuestas sobre tu relación.
+        </div>
 
-  <button onclick="comenzarTest()">
-    🔥 COMENZAR TEST GRATIS
-  </button>
+        <button class="main-btn" onclick="startTest()">
+            🔥 EMPEZAR TEST
+        </button>
+
+        <div class="small">
+            ⏱️ Menos de 2 minutos · Resultado personalizado
+        </div>
+
+    </div>
+
+
+    <!-- TEST -->
+    <div id="test" class="card hidden">
+
+        <div class="progress-text">
+            <span id="progressText">1 / 7</span>
+        </div>
+
+        <div class="progress">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <div id="question" class="question"></div>
+
+        <div id="options"></div>
+
+    </div>
+
+
+    <!-- ANALISIS -->
+    <div id="analysis" class="card hidden">
+
+        <div class="analysis">
+
+            <div class="analysis-icon">🔍</div>
+
+            <h1>ANALIZANDO TUS RESPUESTAS...</h1>
+
+            <div class="loader">
+                <div class="loader-bar"></div>
+            </div>
+
+            <p class="result-text">
+                Estamos procesando el patrón de tus respuestas.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- RESULTADO -->
+    <div id="result" class="card hidden">
+
+        <div class="analysis-icon">✅</div>
+
+        <div class="result-title">
+            ANÁLISIS COMPLETADO
+        </div>
+
+        <p id="resultText" class="result-text"></p>
+
+        <div class="metric">
+
+            <div class="metric-name">
+                <span>🔐 Confianza</span>
+                <span id="trustValue"></span>
+            </div>
+
+            <div class="metric-bar">
+                <div id="trustBar" class="metric-fill"></div>
+            </div>
+
+        </div>
+
+        <div class="metric">
+
+            <div class="metric-name">
+                <span>💬 Comunicación</span>
+                <span id="communicationValue"></span>
+            </div>
+
+            <div class="metric-bar">
+                <div id="communicationBar" class="metric-fill"></div>
+            </div>
+
+        </div>
+
+        <div class="locked">
+            🔒 ❤️ Conexión emocional<br>
+            🔒 👀 Inseguridad<br>
+            🔒 📉 Distancia emocional
+        </div>
+
+        <div class="price">
+            🔓 $1.499 ARS
+        </div>
+
+        <div class="payment">
+            Precio lanzamiento · Pago mediante Mercado Pago
+        </div>
+
+        <button class="main-btn" onclick="paymentMessage()">
+            🔓 DESBLOQUEAR MI ANÁLISIS
+        </button>
+
+        <div class="small">
+            Este análisis interpreta tus respuestas. No confirma por sí solo una infidelidad.
+        </div>
+
+    </div>
 
 </div>
 
+
 <script>
 
-const preguntas = [
-  "¿Qué tan bien conocés aquello que más preocupa actualmente a tu pareja?",
-  "¿Sabés cuál es el mayor miedo de tu pareja?",
-  "¿Sabés qué cosas hacen que tu pareja se sienta realmente querida?",
-  "¿Podés identificar rápidamente cuándo algo le pasa aunque no te lo diga?",
-  "¿Sabés cuál es la cosa que más le molesta de la relación?",
-  "¿Recordás cuál fue uno de los momentos más felices que vivieron juntos?",
-  "¿Sabés qué cambiaría tu pareja de su vida si pudiera hacerlo inmediatamente?",
-  "¿Conocés cuáles son sus principales objetivos para los próximos años?",
-  "¿Sabés qué persona ocupa un lugar especialmente importante en su vida?",
-  "¿Sabés qué situación puede generar más inseguridad en tu pareja?",
-  "¿Sabés qué espera realmente de vos cuando tiene un problema?",
-  "¿Sabés qué aspecto de vos valora más?",
-  "¿Sabés qué aspecto de la relación necesita más atención?",
-  "¿Qué tan seguro/a estás de que tu pareja puede hablar con vos de cualquier problema?",
-  "Si mañana tu pareja tuviera que decir qué es lo que más necesita de vos, ¿creés que sabrías la respuesta?"
+const questions = [
+
+    {
+        text: "📱 Cuando tu pareja recibe un mensaje mientras está con vos...",
+        options: [
+            {text: "🟢 Lo mira normalmente", effects: {trust: 8, communication: 3, jealousy: -5, distance: -2}},
+            {text: "🟡 Lo responde sin darle importancia", effects: {trust: 4, communication: 2, jealousy: -2, distance: 0}},
+            {text: "🟠 Se aleja para responder", effects: {trust: -6, communication: -3, jealousy: 5, distance: 5}},
+            {text: "🔴 Oculta la pantalla", effects: {trust: -12, communication: -6, jealousy: 10, distance: 7}}
+        ]
+    },
+
+    {
+        text: "👀 Últimamente, ¿sentís que algo cambió?",
+        options: [
+            {text: "❤️ No, está todo igual", effects: {trust: 5, communication: 3, jealousy: -5, distance: -8}},
+            {text: "🤔 Un poco", effects: {trust: 0, communication: 0, jealousy: 2, distance: 3}},
+            {text: "⚠️ Sí, lo noto", effects: {trust: -5, communication: -3, jealousy: 5, distance: 8}},
+            {text: "🚨 Bastante", effects: {trust: -9, communication: -6, jealousy: 9, distance: 14}}
+        ]
+    },
+
+    {
+        text: "🔎 Si pudieras descubrir UNA sola cosa ahora mismo, ¿qué elegirías?",
+        options: [
+            {text: "📱 Qué hay en su teléfono", effects: {trust: -3, communication: 0, jealousy: 9, distance: 2}},
+            {text: "💬 Qué habla con otras personas", effects: {trust: -3, communication: -3, jealousy: 8, distance: 2}},
+            {text: "❤️ Qué siente realmente por mí", effects: {trust: 2, communication: 4, jealousy: -2, distance: 5}},
+            {text: "👀 Qué hace cuando no estoy", effects: {trust: -6, communication: -2, jealousy: 9, distance: 6}}
+        ]
+    },
+
+    {
+        text: "💬 Cuando le preguntás algo que te genera dudas...",
+        options: [
+            {text: "🗣️ Me lo explica tranquilamente", effects: {trust: 7, communication: 10, jealousy: -4, distance: -3}},
+            {text: "🤷 Cambia de tema", effects: {trust: -3, communication: -6, jealousy: 3, distance: 4}},
+            {text: "😠 Se molesta", effects: {trust: -4, communication: -8, jealousy: 6, distance: 5}},
+            {text: "🤐 Evita responder", effects: {trust: -7, communication: -10, jealousy: 8, distance: 8}}
+        ]
+    },
+
+    {
+        text: "❤️ ¿Sentís que últimamente está más distante?",
+        options: [
+            {text: "❤️ No", effects: {trust: 5, communication: 4, jealousy: -4, distance: -8}},
+            {text: "🤔 Un poco", effects: {trust: 0, communication: 0, jealousy: 2, distance: 2}},
+            {text: "⚠️ Bastante", effects: {trust: -4, communication: -3, jealousy: 5, distance: 8}},
+            {text: "🚨 Muchísimo", effects: {trust: -8, communication: -7, jealousy: 9, distance: 15}}
+        ]
+    },
+
+    {
+        text: "🔐 ¿Confiás completamente en tu pareja?",
+        options: [
+            {text: "❤️ Sí", effects: {trust: 12, communication: 5, jealousy: -8, distance: -3}},
+            {text: "🤔 Casi", effects: {trust: 3, communication: 2, jealousy: 0, distance: 1}},
+            {text: "⚠️ No estoy seguro/a", effects: {trust: -5, communication: -2, jealousy: 5, distance: 4}},
+            {text: "🔴 No", effects: {trust: -12, communication: -5, jealousy: 9, distance: 7}}
+        ]
+    },
+
+    {
+        text: "💭 Si pudieras conocer UNA verdad sobre tu relación ahora mismo...",
+        options: [
+            {text: "❤️ Qué siente realmente por mí", effects: {trust: 0, communication: 5, jealousy: -2, distance: 8}},
+            {text: "🔐 Si puedo confiar completamente", effects: {trust: -5, communication: 0, jealousy: 7, distance: 3}},
+            {text: "💬 Qué está evitando decirme", effects: {trust: -4, communication: -6, jealousy: 6, distance: 5}},
+            {text: "👀 Qué hace cuando no estoy", effects: {trust: -7, communication: -2, jealousy: 10, distance: 7}}
+        ]
+    }
+
 ];
 
-let preguntaActual = 0;
-let puntos = 0;
 
-const respuestas = [
-  { texto: "No tengo idea", puntos: 1 },
-  { texto: "Creo que sé", puntos: 2 },
-  { texto: "Más o menos", puntos: 3 },
-  { texto: "Bastante", puntos: 4 },
-  { texto: "Lo sé perfectamente", puntos: 5 }
-];
+let currentQuestion = 0;
 
-function comenzarTest() {
-  preguntaActual = 0;
-  puntos = 0;
-  mostrarPregunta();
+let scores = {
+    trust: 50,
+    communication: 50,
+    jealousy: 50,
+    distance: 50
+};
+
+
+function startTest() {
+
+    document.getElementById("start").classList.add("hidden");
+
+    document.getElementById("test").classList.remove("hidden");
+
+    showQuestion();
+
 }
 
-function mostrarPregunta() {
 
-  const pregunta = preguntas[preguntaActual];
+function showQuestion() {
 
-  let html = `
-    <div class="progress">
-      Pregunta ${preguntaActual + 1} de ${preguntas.length}
-    </div>
+    const q = questions[currentQuestion];
 
-    <div class="question">
-      ${pregunta}
-    </div>
-  `;
+    document.getElementById("question").textContent = q.text;
 
-  respuestas.forEach(respuesta => {
-    html += `
-      <button class="answer"
-        onclick="responder(${respuesta.puntos})">
-        ${respuesta.texto}
-      </button>
-    `;
-  });
+    document.getElementById("progressText").textContent =
+        (currentQuestion + 1) + " / " + questions.length;
 
-  document.getElementById("app").innerHTML = html;
+    document.getElementById("progressBar").style.width =
+        ((currentQuestion + 1) / questions.length * 100) + "%";
+
+
+    const optionsContainer = document.getElementById("options");
+
+    optionsContainer.innerHTML = "";
+
+
+    q.options.forEach(function(option) {
+
+        const button = document.createElement("button");
+
+        button.className = "option";
+
+        button.textContent = option.text;
+
+        button.onclick = function() {
+
+            selectAnswer(option.effects);
+
+        };
+
+        optionsContainer.appendChild(button);
+
+    });
+
 }
 
-function responder(valor) {
 
-  puntos += valor;
-  preguntaActual++;
+function selectAnswer(effects) {
 
-  if (preguntaActual < preguntas.length) {
-    mostrarPregunta();
-  } else {
-    mostrarResultado();
-  }
+    scores.trust += effects.trust;
+    scores.communication += effects.communication;
+    scores.jealousy += effects.jealousy;
+    scores.distance += effects.distance;
+
+
+    currentQuestion++;
+
+
+    if(currentQuestion < questions.length) {
+
+        showQuestion();
+
+    } else {
+
+        finishTest();
+
+    }
+
 }
 
-function mostrarResultado() {
 
-  let titulo = "";
-  let descripcion = "";
+function limitScore(value) {
 
-  if (puntos >= 61) {
-    titulo = "CONEXIÓN MUY ALTA";
-    descripcion = "Tus respuestas muestran un alto nivel de conocimiento sobre tu pareja.";
-  } 
-  else if (puntos >= 46) {
-    titulo = "BUENA CONEXIÓN";
-    descripcion = "Conocés bastante a tu pareja, aunque hay algunos aspectos que podrían sorprenderte.";
-  } 
-  else if (puntos >= 31) {
-    titulo = "HAY DISTANCIA";
-    descripcion = "Tus respuestas muestran algunos aspectos de la relación que merecen atención.";
-  } 
-  else {
-    titulo = "HAY MUCHO POR DESCUBRIR";
-    descripcion = "Tus respuestas indican que probablemente hay varias cosas que todavía no conocés de tu pareja.";
-  }
+    return Math.max(0, Math.min(100, value));
 
-  document.getElementById("app").innerHTML = `
+}
 
-    <div class="emoji">🔎</div>
 
-    <h2>${titulo}</h2>
+function finishTest() {
 
-    <div class="result">${puntos}/75</div>
+    document.getElementById("test").classList.add("hidden");
 
-    <p>${descripcion}</p>
+    document.getElementById("analysis").classList.remove("hidden");
 
-    <div class="locked">
 
-      <h2>🔒 ANÁLISIS COMPLETO</h2>
+    setTimeout(function() {
 
-      <p>
-        Encontramos aspectos de tus respuestas que merecen
-        un análisis más profundo.
-      </p>
+        document.getElementById("analysis").classList.add("hidden");
 
-      <button onclick="alert('PRÓXIMAMENTE: sistema de pago')">
-        🔓 DESBLOQUEAR ANÁLISIS
-      </button>
+        showResult();
 
-    </div>
+    }, 2000);
 
-  `;
+}
+
+
+function showResult() {
+
+    const trust = Math.round(limitScore(scores.trust));
+
+    const communication = Math.round(limitScore(scores.communication));
+
+    const jealousy = Math.round(limitScore(scores.jealousy));
+
+    const distance = Math.round(limitScore(scores.distance));
+
+
+    document.getElementById("result").classList.remove("hidden");
+
+
+    document.getElementById("trustValue").textContent = trust + "%";
+
+    document.getElementById("communicationValue").textContent =
+        communication + "%";
+
+
+    document.getElementById("trustBar").style.width =
+        trust + "%";
+
+    document.getElementById("communicationBar").style.width =
+        communication + "%";
+
+
+    let message = "";
+
+
+    if(distance >= 70 && trust <= 45) {
+
+        message =
+        "Tus respuestas muestran una combinación de preocupación por la distancia y la confianza. Hay un patrón que merece ser analizado con más detalle.";
+
+    } else if(jealousy >= 70) {
+
+        message =
+        "Tus respuestas muestran un nivel elevado de preocupación e inseguridad alrededor de la relación. Hay algunos puntos que vale la pena mirar con más profundidad.";
+
+    } else if(communication <= 40) {
+
+        message =
+        "Tus respuestas muestran algunas dificultades relacionadas con la comunicación. El análisis completo puede ayudarte a entender qué respuestas influyeron más.";
+
+    } else if(trust >= 70 && distance <= 40) {
+
+        message =
+        "Tus respuestas muestran una base importante de confianza y cercanía. Aun así, algunas respuestas generan matices que aparecen en el análisis completo.";
+
+    } else {
+
+        message =
+        "Tus respuestas muestran un perfil mixto. Hay diferentes señales relacionadas con confianza, comunicación y distancia que conviene analizar en conjunto.";
+
+    }
+
+
+    document.getElementById("resultText").textContent = message;
+
+}
+
+
+function paymentMessage() {
+
+    alert(
+        "🔒 EL ANÁLISIS COMPLETO ESTARÁ DISPONIBLE PRÓXIMAMENTE.\n\nPrecio lanzamiento: $1.499 ARS\n\nEn el próximo paso vamos a conectar el botón con Mercado Pago."
+    );
+
 }
 
 </script>
